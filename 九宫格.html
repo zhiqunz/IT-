@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>九宫格</title>
+	<style type="text/css">
+		body div{
+			margin: 0;
+			padding: 0;
+		}
+		#main{
+			width: 325px;
+			height: 325px;
+			margin: 5px;
+			border: 1px solid blue;
+			background: white;
+			border-radius: 10px;
+		}
+
+		.sub{
+			width: 100px;
+			height: 100px;
+			margin-top:  5px;
+			margin-left: 5px;
+			border: 1px solid black;
+			background: yellow; 
+			border-radius: 10px;
+			float: left;
+		}
+		#start,#end{
+			width: 325px;
+			height: 20px;
+			margin: 10px;
+			background: white;
+			border: 1px solid blue;
+			font-size: 14px;
+			text-align: center;
+		}		
+	</style>
+</head>
+<body>
+	<div id=main>
+		<div class =sub></div>
+		<div class =sub></div>
+		<div class =sub></div>
+		<div class =sub></div>
+		<div class =sub></div>
+		<div class =sub></div>
+		<div class =sub></div>
+		<div class =sub></div>
+		<div class =sub></div>
+	</div>
+	<div id=start>开始闪</div>
+	<div id=end>结束闪</div>
+
+	<script type="text/javascript">
+		console.log('start');
+		var timeName;
+		var overtimeName;
+		var objDivStart = document.getElementById("start");
+		var objDivEnd = document.getElementById("end");
+		var ary = document.getElementsByClassName("sub");
+		var aryColour =["#9ACD32","#D02090","#40E0D0","#FF6347","#008080","#00FF7F","#7A9900","#2E8B57","#00FFFF"];
+
+		//event : start the event(changing color)
+		objDivStart.onclick = function(){
+			timeName = setInterval(start,1000);
+			overtimeName = setTimeout(end,10000);
+		}
+
+		//event : clear the event(changeing color)
+		objDivEnd.onclick = function () {
+			end();
+		}
+		function end () {
+			if (timeName) {
+				clearInterval(timeName);
+				console.log("end1");				
+			}
+			if (overtimeName){
+				clearTimeout(overtimeName);
+				console.log("end2");
+			}
+		}
+
+		// fun : start change the color
+		function start () {
+
+			var arySelectDiv = [];
+			var aryselectColour = [];
+			var tmp;				
+
+			for(var i = 0;i<ary.length;i++){
+				ary[i].style.backgroundColor = "#FFFF00";
+			}
+
+			while(arySelectDiv.length <= 3){
+				tmp = Math.floor(Math.random()*9);
+				if (contain(arySelectDiv,tmp)){
+					arySelectDiv.push(tmp);
+				}
+			}
+
+			while(aryselectColour.length <= 3){
+				tmp = Math.floor(Math.random()*9);
+				if (contain(aryselectColour,tmp)){
+					aryselectColour.push(tmp);
+				}
+			}
+			for (var i =0; i<3;i++){
+				console.log(arySelectDiv[i],aryselectColour[i])
+				ary[arySelectDiv[i]].style.backgroundColor = aryColour[aryselectColour[i]];
+			}
+			console.log('changing');
+		}
+
+		//check if the ary have the obj
+		function contain (ary11,obj) {
+			var i = ary11.length;
+			while(i--){
+				//console.log(i-1,ary11[i-1],obj);
+
+				if (ary11[i-1] === obj){
+					//console.log("check end")
+					return false;
+				}
+			}
+			//console.log("check end")
+			return true;
+		}
+	//create by zhuzhiqun
+	</script>
+</body>
+</html>
